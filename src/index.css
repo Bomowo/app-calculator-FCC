@@ -1,0 +1,22 @@
+body,html {
+    margin:0;
+    padding: 0;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.calculator-container {
+    width: 460px;
+}
+.display-container{
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+button{
+    width: 115px;
+    height: 60px;
+}
