@@ -1,16 +1,20 @@
 import {useState} from 'react'
 function App() {
 
-  const [calculator, setCalculator] = useState(null)
+  const [calculator, setCalculator] = useState({
+    display: '',
+    formula: ''
+  })
 
   function testClick (e) {
+    if (e.target.value === 'AC') {
+      setCalculator({
+        display: '',
+        formula: ''
+      })
+    }
+
     setCalculator(prevCalculator => {
-      if(calculator === null) {
-        return {
-          display: e.target.value,
-          formula: e.target.value
-        }
-      } else
       return {
         ...prevCalculator,
         display: e.target.value,
@@ -22,8 +26,8 @@ function App() {
   return (
     <div className="calculator-container">
       <div className="display-container">
-        <div>formula: {calculator && calculator.formula}</div>
-        <div>input and output Display: {calculator && calculator.display}</div>
+        <div>formula: {calculator.formula}</div>
+        <div>input and output Display: {calculator.display}</div>
       </div>
       <div className="buttons-container">
         <button value="AC" onClick={testClick}>AC</button>
