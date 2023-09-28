@@ -2,13 +2,16 @@ import {useState} from 'react'
 function App() {
 
   const [calculator, setCalculator] = useState({
-    display: '',
+    display: '0',
     formula: ''
   })
 
+  let symbolRegEx = /[+\/*\-]/
+
   function resetCalculator () {
+    console.clear()
     setCalculator({
-      display: '',
+      display: '0',
       formula: ''
     })
   }
@@ -23,8 +26,88 @@ function App() {
     })
   }
 
+  function addition () {
+
+    let lastSymbol = calculator.formula[calculator.formula.length-1]
+
+    if(lastSymbol !== '+' && lastSymbol !== '-' && lastSymbol !== '*' && lastSymbol !== '/') {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '+',
+          formula: prevCalculator.formula + '+'
+        }
+      })
+    }
+
+  }
+
+  function subtraction () {
+
+    let lastSymbol = calculator.formula[calculator.formula.length-1]
+    let preLastSymbol = calculator.formula[calculator.formula.length-2]
+
+    if((lastSymbol.match(symbolRegEx) && !preLastSymbol.match(symbolRegEx)) ||  (!lastSymbol.match(symbolRegEx)) || calculator.formula.length===1) {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '-',
+          formula: prevCalculator.formula + '-'
+        }
+      })
+    }
+  }
+
+  function multiplication () {
+
+    let lastSymbol = calculator.formula[calculator.formula.length-1]
+
+    if(!lastSymbol.match(symbolRegEx)) {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '*',
+          formula: prevCalculator.formula + '*'
+        }
+      })
+    }
+
+  }
+
+  function division () {
+
+    let lastSymbol = calculator.formula[calculator.formula.length-1]
+
+    if(!lastSymbol.match(symbolRegEx)) {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '/',
+          formula: prevCalculator.formula + '/'
+        }
+      })
+    }
+
+  }
+
+  function fraction () {
+    let lastSymbol = calculator.formula[calculator.formula.length-1]
+    let arrayOfNum = (calculator.formula.split(symbolRegEx))
+
+    if((!lastSymbol.match(symbolRegEx)) && !arrayOfNum[arrayOfNum.length-1].includes('.')) {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '.',
+          formula: prevCalculator.formula + '.'
+        }
+      })
+    }
+  }
+
   function calculate() {
-    const answer = eval(calculator.formula)
+    const formulaWithoutDoubleNegative = calculator.formula.replaceAll('--', '+')
+    const answer = eval(formulaWithoutDoubleNegative)
     setCalculator(prevCalculator => {
       return {
         ...prevCalculator,
@@ -38,26 +121,26 @@ function App() {
     <div className="calculator-container">
       <div className="display-container">
         <div>formula: {calculator.formula}</div>
-        <div>input and output Display: {calculator.display}</div>
+        <div id="display">{calculator.display}</div>
       </div>
       <div className="buttons-container">
-        <button value="AC" onClick={resetCalculator}>AC</button>
-        <button value="/" onClick={handleNumbers}>/</button>
-        <button value="X" onClick={handleNumbers}>X</button>
-        <button value="-" onClick={handleNumbers}>-</button>
-        <button value="7" onClick={handleNumbers}>7</button>
-        <button value="8" onClick={handleNumbers}>8</button>
-        <button value="9" onClick={handleNumbers}>9</button>
-        <button value="+" onClick={handleNumbers}>+</button>
-        <button value="4" onClick={handleNumbers}>4</button>
-        <button value="5" onClick={handleNumbers}>5</button>
-        <button value="6" onClick={handleNumbers}>6</button>
-        <button value="1" onClick={handleNumbers}>1</button>
-        <button value="2" onClick={handleNumbers}>2</button>
-        <button value="3" onClick={handleNumbers}>3</button>
-        <button value="=" onClick={calculate}>=</button>
-        <button value="0" onClick={handleNumbers}>0</button>
-        <button value="." onClick={handleNumbers}>.</button>
+        <button id="clear" value="AC" onClick={resetCalculator}>AC</button>
+        <button id="divide" value="/" onClick={division}>/</button>
+        <button id="multiply" value="X" onClick={multiplication}>X</button>
+        <button id="subtract" value="-" onClick={subtraction}>-</button>
+        <button id="seven" value="7" onClick={handleNumbers}>7</button>
+        <button id="eight" value="8" onClick={handleNumbers}>8</button>
+        <button id="nine" value="9" onClick={handleNumbers}>9</button>
+        <button id="add" value="+" onClick={addition}>+</button>
+        <button id="four" value="4" onClick={handleNumbers}>4</button>
+        <button id="five" value="5" onClick={handleNumbers}>5</button>
+        <button id="six" value="6" onClick={handleNumbers}>6</button>
+        <button id="one" value="1" onClick={handleNumbers}>1</button>
+        <button id="two" value="2" onClick={handleNumbers}>2</button>
+        <button id="three" value="3" onClick={handleNumbers}>3</button>
+        <button id="equals" value="=" onClick={calculate}>=</button>
+        <button id="zero" value="0" onClick={handleNumbers}>0</button>
+        <button id="decimal" value="." onClick={fraction}>.</button>
       </div>
     </div>
   )
