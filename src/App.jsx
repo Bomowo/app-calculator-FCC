@@ -109,7 +109,7 @@ function App() {
       setCalculator(prevCalculator => {
         return {
           ...prevCalculator,
-          display: '.',
+          display: prevCalculator.display + '.',
           formula: prevCalculator.formula + '.'
         }
       })
