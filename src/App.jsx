@@ -17,13 +17,24 @@ function App() {
   }
 
   function handleNumbers (e) {
-    setCalculator(prevCalculator => {
-      return {
-        ...prevCalculator,
-        display: e.target.value,
-        formula: prevCalculator.formula + e.target.value
-      }
-    })
+    if (calculator.display === '0') {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: e.target.value,
+          formula: prevCalculator.formula + e.target.value
+        }
+      })
+    } else {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: prevCalculator.display + e.target.value,
+          formula: prevCalculator.formula + e.target.value
+        }
+      })
+    }
+    
   }
 
   function addition () {
