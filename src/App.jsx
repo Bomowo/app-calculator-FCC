@@ -12,7 +12,8 @@ function App() {
     console.clear()
     setCalculator({
       display: '0',
-      formula: ''
+      formula: '',
+      finished: false
     })
   }
 
@@ -25,7 +26,17 @@ function App() {
           formula: prevCalculator.formula + e.target.value
         }
       })
-    } else {
+    }else if(calculator.finished) {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: e.target.value,
+          formula: e.target.value,
+          finished: false
+        }
+      })
+    } else
+     {
       setCalculator(prevCalculator => {
         return {
           ...prevCalculator,
@@ -41,6 +52,17 @@ function App() {
 
     let lastSymbol = calculator.formula[calculator.formula.length-1]
     let preLastSymbol = calculator.formula[calculator.formula.length-2]
+
+    if(calculator.finished) {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '+',
+          formula: prevCalculator.formula.split('=')[1] + '+',
+          finished: false
+        }
+      })
+    } else
 
     if(!lastSymbol.match(symbolRegEx)) {
       setCalculator(prevCalculator => {
@@ -77,6 +99,17 @@ function App() {
     let lastSymbol = calculator.formula[calculator.formula.length-1]
     let preLastSymbol = calculator.formula[calculator.formula.length-2]
 
+    if(calculator.finished) {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '-',
+          formula: prevCalculator.formula.split('=')[1] + '-',
+          finished: false
+        }
+      })
+    } else
+
     if((lastSymbol.match(symbolRegEx) && !preLastSymbol.match(symbolRegEx)) ||  (!lastSymbol.match(symbolRegEx)) || calculator.formula.length===1) {
       setCalculator(prevCalculator => {
         return {
@@ -101,6 +134,17 @@ function App() {
 
     let lastSymbol = calculator.formula[calculator.formula.length-1]
     let preLastSymbol = calculator.formula[calculator.formula.length-2]
+
+    if(calculator.finished) {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '*',
+          formula: prevCalculator.formula.split('=')[1] + '*',
+          finished: false
+        }
+      })
+    } else
 
     if(!lastSymbol.match(symbolRegEx)) {
       setCalculator(prevCalculator => {
@@ -135,6 +179,17 @@ function App() {
 
     let lastSymbol = calculator.formula[calculator.formula.length-1]
     let preLastSymbol = calculator.formula[calculator.formula.length-2]
+
+    if(calculator.finished) {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '/',
+          formula: prevCalculator.formula.split('=')[1] + '/',
+          finished: false
+        }
+      })
+    } else
 
     if(!lastSymbol.match(symbolRegEx)) {
       setCalculator(prevCalculator => {
@@ -188,7 +243,8 @@ function App() {
       return {
         ...prevCalculator,
         display: answer,
-        formula: prevCalculator.formula + '=' + answer
+        formula: prevCalculator.formula + '=' + answer,
+        finished: true
       }
     })
   }
