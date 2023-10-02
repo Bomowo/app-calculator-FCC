@@ -40,13 +40,32 @@ function App() {
   function addition () {
 
     let lastSymbol = calculator.formula[calculator.formula.length-1]
+    let preLastSymbol = calculator.formula[calculator.formula.length-2]
 
-    if(lastSymbol !== '+' && lastSymbol !== '-' && lastSymbol !== '*' && lastSymbol !== '/') {
+    if(!lastSymbol.match(symbolRegEx)) {
       setCalculator(prevCalculator => {
         return {
           ...prevCalculator,
           display: '+',
           formula: prevCalculator.formula + '+'
+        }
+      })
+    }
+    if(lastSymbol.match(symbolRegEx) && !preLastSymbol.match(symbolRegEx)) {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '+',
+          formula: prevCalculator.formula.slice(0,-1) + '+'
+        }
+      })
+    } else 
+    if (lastSymbol === '-' && preLastSymbol.match(symbolRegEx)){
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '+',
+          formula: prevCalculator.formula.slice(0,-2) + '+'
         }
       })
     }
@@ -67,11 +86,21 @@ function App() {
         }
       })
     }
+    if (lastSymbol === '-' && preLastSymbol.match(symbolRegEx)){
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '-',
+          formula: prevCalculator.formula.slice(0,-2) + '-'
+        }
+      })
+    }
   }
 
   function multiplication () {
 
     let lastSymbol = calculator.formula[calculator.formula.length-1]
+    let preLastSymbol = calculator.formula[calculator.formula.length-2]
 
     if(!lastSymbol.match(symbolRegEx)) {
       setCalculator(prevCalculator => {
@@ -82,12 +111,30 @@ function App() {
         }
       })
     }
-
-  }
+    if(lastSymbol.match(symbolRegEx) && !preLastSymbol.match(symbolRegEx)) {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '*',
+          formula: prevCalculator.formula.slice(0,-1) + '*'
+        }
+      })
+    } else 
+    if (lastSymbol === '-' && preLastSymbol.match(symbolRegEx)){
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '*',
+          formula: prevCalculator.formula.slice(0,-2) + '*'
+        }
+      })
+    }
+}
 
   function division () {
 
     let lastSymbol = calculator.formula[calculator.formula.length-1]
+    let preLastSymbol = calculator.formula[calculator.formula.length-2]
 
     if(!lastSymbol.match(symbolRegEx)) {
       setCalculator(prevCalculator => {
@@ -99,6 +146,24 @@ function App() {
       })
     }
 
+    if(lastSymbol.match(symbolRegEx) && !preLastSymbol.match(symbolRegEx)) {
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '/',
+          formula: prevCalculator.formula.slice(0,-1) + '/'
+        }
+      })
+    } else 
+    if (lastSymbol === '-' && preLastSymbol.match(symbolRegEx)){
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: '/',
+          formula: prevCalculator.formula.slice(0,-2) + '/'
+        }
+      })
+    }
   }
 
   function fraction () {
