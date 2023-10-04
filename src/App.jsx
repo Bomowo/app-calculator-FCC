@@ -263,16 +263,17 @@ function App() {
         <button id="seven" value="7" onClick={handleNumbers}>7</button>
         <button id="eight" value="8" onClick={handleNumbers}>8</button>
         <button id="nine" value="9" onClick={handleNumbers}>9</button>
-        <button id="add" value="+" onClick={addition}>+</button>
+        <button id="add" className="plus-button" value="+" onClick={addition}>+</button>
         <button id="four" value="4" onClick={handleNumbers}>4</button>
         <button id="five" value="5" onClick={handleNumbers}>5</button>
         <button id="six" value="6" onClick={handleNumbers}>6</button>
         <button id="one" value="1" onClick={handleNumbers}>1</button>
         <button id="two" value="2" onClick={handleNumbers}>2</button>
         <button id="three" value="3" onClick={handleNumbers}>3</button>
-        <button id="equals" value="=" onClick={calculate}>=</button>
-        <button id="zero" value="0" onClick={handleNumbers}>0</button>
+        <button id="equals" className="eql-button" value="=" onClick={calculate}>=</button>
+        <button id="zero" className="zero-button" value="0" onClick={handleNumbers}>0</button>
         <button id="decimal" value="." onClick={fraction}>.</button>
+
       </div>
     </div>
   )
