@@ -27,7 +27,7 @@ body{
     grid-auto-columns: minmax(60px, auto);
 }
 button{
-
+    background-color: aqua;
 }
 .plus-button {
     grid-column: 5/4;
