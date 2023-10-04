@@ -252,14 +252,14 @@ function App() {
   return (
     <div className="calculator-container">
       <div className="display-container">
-        <div>formula: {calculator.formula}</div>
+        <div>{calculator.formula}</div>
         <div id="display">{calculator.display}</div>
       </div>
       <div className="buttons-container">
-        <button id="clear" value="AC" onClick={resetCalculator}>AC</button>
-        <button id="divide" value="/" onClick={division}>/</button>
-        <button id="multiply" value="X" onClick={multiplication}>X</button>
-        <button id="subtract" value="-" onClick={subtraction}>-</button>
+        <button id="clear" className='ac-button' value="AC" onClick={resetCalculator}>AC</button>
+        <button id="divide" className='signs-button' value="/" onClick={division}>/</button>
+        <button id="multiply" className='signs-button' value="X" onClick={multiplication}>X</button>
+        <button id="subtract" className='signs-button' value="-" onClick={subtraction}>-</button>
         <button id="seven" value="7" onClick={handleNumbers}>7</button>
         <button id="eight" value="8" onClick={handleNumbers}>8</button>
         <button id="nine" value="9" onClick={handleNumbers}>9</button>
@@ -272,7 +272,7 @@ function App() {
         <button id="three" value="3" onClick={handleNumbers}>3</button>
         <button id="equals" className="eql-button" value="=" onClick={calculate}>=</button>
         <button id="zero" className="zero-button" value="0" onClick={handleNumbers}>0</button>
-        <button id="decimal" value="." onClick={fraction}>.</button>
+        <button id="decimal"  value="." onClick={fraction}>.</button>
 
       </div>
     </div>
