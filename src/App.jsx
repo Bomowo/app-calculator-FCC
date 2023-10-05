@@ -1,37 +1,75 @@
 import {useState} from 'react'
 function App() {
+  const systemTxt = ''
 
   const [calculator, setCalculator] = useState({
     display: '0',
-    formula: ''
+    formula: systemTxt
   })
 
-  let symbolRegEx = /[+\/*\-]/
+  const symbolRegEx = /[+\/*\-]/
+
+  function handleKeyboard(e) {
+
+    const keyPress = e.key
+    console.log(keyPress)
+
+    if(keyPress.match(/[0-9]/)) {
+      handleNumbers(keyPress)
+    }
+
+    if(keyPress === '.') {
+      fraction()
+    }
+
+    if(keyPress === 'Escape' || keyPress === 'Backspace') {
+      resetCalculator()
+    }
+
+    if(keyPress === '+') {
+      addition()
+    }
+    if(keyPress === '-') {
+      subtraction()
+    }
+    if(keyPress === '*') {
+      multiplication()
+    }
+    if(keyPress === '/') {
+      division()
+    }
+    if(keyPress === '=' || keyPress === 'Enter') {
+      calculate()
+    }
+  }
 
   function resetCalculator () {
     console.clear()
     setCalculator({
       display: '0',
-      formula: '',
+      formula: systemTxt,
       finished: false
     })
   }
 
   function handleNumbers (e) {
+    let number
+    typeof e === 'string' ? number = e : number = e.target.value
+
     if (calculator.display === '0') {
       setCalculator(prevCalculator => {
         return {
           ...prevCalculator,
-          display: e.target.value,
-          formula: prevCalculator.formula + e.target.value
+          display: number,
+          formula: number
         }
       })
     }else if(calculator.finished) {
       setCalculator(prevCalculator => {
         return {
           ...prevCalculator,
-          display: e.target.value,
-          formula: e.target.value,
+          display: number,
+          formula: number,
           finished: false
         }
       })
@@ -40,8 +78,8 @@ function App() {
       setCalculator(prevCalculator => {
         return {
           ...prevCalculator,
-          display: prevCalculator.display + e.target.value,
-          formula: prevCalculator.formula + e.target.value
+          display: prevCalculator.display + number,
+          formula: prevCalculator.formula + number
         }
       })
     }
@@ -238,19 +276,21 @@ function App() {
 
   function calculate() {
     const formulaWithoutDoubleNegative = calculator.formula.replaceAll('--', '+')
-    const answer = eval(formulaWithoutDoubleNegative)
-    setCalculator(prevCalculator => {
-      return {
-        ...prevCalculator,
-        display: answer,
-        formula: prevCalculator.formula + '=' + answer,
-        finished: true
-      }
-    })
+    if(formulaWithoutDoubleNegative.length !== 0) {
+      const answer = eval(formulaWithoutDoubleNegative)
+      setCalculator(prevCalculator => {
+        return {
+          ...prevCalculator,
+          display: answer,
+          formula: prevCalculator.formula + '=' + answer,
+          finished: true
+        }
+      })
+    }
   }
 
   return (
-    <div className="calculator-container">
+    <div className="calculator-container" onKeyDown={handleKeyboard} tabIndex='-1'>
       <div className="display-container">
         <div>{calculator.formula}</div>
         <div id="display">{calculator.display}</div>

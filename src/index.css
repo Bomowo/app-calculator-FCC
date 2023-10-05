@@ -7,15 +7,17 @@ body{
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #283618;
+    background-color: #1b2410;
     color: #FEFAE0;
     font-size: 2rem;
 }
 .calculator-container {
     background-color: #606C38;
     min-width: 420px;
+
 }
 .display-container{
+
     text-align: right;
     text-overflow: ellipsis;
     white-space: nowrap;
